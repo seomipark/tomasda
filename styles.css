@@ -1,146 +1,69 @@
-/* ========== 기본 스타일 ========== */
+/* 기본 스타일 초기화 */
 body, html {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
-  overflow-x: hidden;
-  background: url('bg-train.jpg') no-repeat center center fixed;
-  background-size: cover;
-  color: white;
+  overflow: hidden;
   font-family: 'Arial', sans-serif;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
-/* 컨테이너 정렬 */
+/* 슬라이드 컨테이너 */
 .container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  text-align: center;
-  padding: 20px;
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  height: 100vh;
+  scroll-behavior: smooth;
 }
 
-/* ========== 1. 작았다가 커지는 모션 (Pulse 효과) ========== */
-.title {
-  font-family: '궁서', serif;
-  font-size: 2.5em;
-  font-weight: bold;
-  color: red;
-  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.8);
-  margin-bottom: 20px;
-  display: inline-block;
-}
-
-.animated-pulse {
-  animation: pulse-effect 2s infinite ease-in-out;
-}
-
-@keyframes pulse-effect {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.2);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-/* ========== 2. 기차처럼 움직이는 하단 텍스트 ========== */
-.subtitle {
-  font-size: 1.5em;
-  font-weight: bold;
-  display: inline-block;
-  white-space: nowrap;
-  position: relative;
-  animation: train-move 4s infinite linear;
-}
-
-@keyframes train-move {
-  0% {
-    transform: translateX(-100%);
-  }
-  50% {
-    transform: translateX(100%);
-  }
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-/* ========== 3. 이미지 배치 ========== */
-.images {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
+/* 개별 슬라이드 스타일 */
+.slide {
   width: 100%;
-  max-width: 1200px;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  scroll-snap-align: start;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
 }
 
-.img-item {
-  width: 45%;
-  max-width: 300px;
-  border-radius: 10px;
-  box-shadow: 2px 4px 8px rgba(0, 0, 0, 0.4);
-  transition: transform 0.3s;
+.slide.active {
+  opacity: 1;
 }
 
-.img-item:hover {
-  transform: scale(1.05);
+/* 네비게이션 Dot */
+.dot-navigation {
+  position: fixed;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  z-index: 10;
 }
 
-/* ========== 4. 반응형 설정 ========== */
-/* 모바일 (가로 600px 이하) */
+.dot-navigation ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  margin: 10px;
+  background-color: #bbb;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.dot.active {
+  background-color: #ff4747;
+}
+
+/* 반응형 설정 */
 @media (max-width: 600px) {
-  .title {
-    font-size: 1.8em;
-  }
-
-  .subtitle {
-    font-size: 1.2em;
-  }
-
-  .images {
-    flex-direction: column;
-  }
-
-  .img-item {
-    width: 80%;
-    margin: 0 auto;
-  }
-}
-
-/* 태블릿 (가로 601px ~ 1024px) */
-@media (min-width: 601px) and (max-width: 1024px) {
-  .title {
-    font-size: 2.2em;
-  }
-
-  .subtitle {
-    font-size: 1.3em;
-  }
-
-  .img-item {
-    width: 45%;
-  }
-}
-
-/* 데스크탑 (가로 1025px 이상) */
-@media (min-width: 1025px) {
-  .title {
-    font-size: 2.5em;
-  }
-
-  .subtitle {
-    font-size: 1.5em;
-  }
-
-  .img-item {
-    width: 40%;
+  .slide {
+    background-size: contain;
   }
 }
